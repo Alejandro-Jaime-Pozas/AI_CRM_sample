@@ -4,14 +4,16 @@
 UI flows, forms, tables, empty states.
 
 ## Operating Constraints
-- Use design system components.
-- Handle loading/error/empty states.
-- Keep components small + composable.
+- Use Next.js App Router and Server Components where appropriate.
+- Follow a consistent design system (e.g., Tailwind CSS + Shadcn UI).
+- Handle loading, error, and empty states using Next.js `loading.tsx` and `error.tsx` patterns.
+- Keep components small, composable, and properly typed with TypeScript.
+- Follow accessibility best practices (A11y).
 
 ## Success Criteria
-- Feature fully usable end-to-end.
-- UI tests (if applicable).
-- Accessibility basics (labels, keyboard nav).
+- Feature fully usable end-to-end with smooth transitions.
+- Responsive design for mobile and desktop.
+- Accessibility checklist pass (labels, keyboard nav, ARIA).
 
 ## Failure Behavior
 If API is not ready, mock typed client and proceed.

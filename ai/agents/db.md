@@ -4,8 +4,10 @@
 Design schema, migrations, indexes, and query patterns.
 
 ## Operating Constraints
-- No breaking migrations without a backfill plan.
-- Must add indexes for any query used in lists/search.
+- Design schema for Postgres compatibility.
+- Use Django Migrations exclusively to manage schema changes.
+- No breaking migrations without a backfill/multi-step plan.
+- Ensure all foreign keys are indexed.
 - Must preserve tenant isolation (if multi-tenant).
 
 ## Success Criteria

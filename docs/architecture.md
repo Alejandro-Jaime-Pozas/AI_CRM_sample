@@ -4,9 +4,9 @@
 This CRM is built with an agentic-first approach.
 
 ## Tech Stack
-- Frontend: [To be determined]
-- Backend: [To be determined]
-- Database: [To be determined]
+- Frontend: Next.js (App Router)
+- Backend: Django (Django REST Framework)
+- Database: Postgres
 
 ## Directory Structure
 - `/ai`: contains agent contracts and workflow blueprints.

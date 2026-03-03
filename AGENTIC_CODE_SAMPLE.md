@@ -1,8 +1,8 @@
-I’ll walk you through a realistic “agent contract” setup for building a full-stack CRM, and show how the stored artifacts (role + constraints + success + failure + tools + stop conditions) actually get used day to day.
+I’ll walk you through a realistic “agent contract” setup for building a full-stack Mexican Online Stock Trading Retail Brokerage, and show how the stored artifacts (role + constraints + success + failure + tools + stop conditions) actually get used day to day.
 
 Below is an example repo layout + the exact kinds of files great agentic devs keep. Then I’ll run a sample feature from start → shipped.
 
-Repo layout for a CRM with agent contracts
+Repo layout for a Mexican Online Stock Trading Retail Brokerage with agent contracts
 /ai
   /agents
     planner.md
@@ -190,10 +190,10 @@ Stop
 
 Stop after review.
 
-Now let’s build one CRM feature, start to finish
+Now let’s build one Mexican Online Stock Trading Retail Brokerage feature, start to finish
 Feature request
 
-“Add Contacts to the CRM: list/create/edit contacts, attach them to an Account, and allow search by name/email.”
+“Add Contacts to the Mexican Online Stock Trading Retail Brokerage: list/create/edit contacts, attach them to an Account, and allow search by name/email.”
 
 We’ll run the workflow using your stored “agent contracts.”
 

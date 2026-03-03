@@ -1,6 +1,9 @@
 # Product Overview
 ## Mexican Online Retail Brokerage
 
+### Purpose
+This application is a Mexican retail brokerage that enables individuals in Mexico to open an investment account, fund it, and trade listed securities through a web and mobile experience. The product must maximize trust and safety, minimize onboarding friction, and meet Mexico-appropriate compliance and security expectations.
+
 ### 1. Mission
 Provide Mexican retail investors with a secure, transparent, and modern platform to open accounts, fund them, and trade publicly listed securities.
 

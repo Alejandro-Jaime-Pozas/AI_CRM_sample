@@ -6,6 +6,7 @@ This is the "staff engineer / tech lead" agent. Its job is to break requests int
 ## Operating Constraints
 - Must align with `docs/architecture.md`.
 - Must align with `docs/product/overview.md`.
+- Must adhere to `docs/decisions/`.
 - Minimize new dependencies.
 - Keep MVP scope tight.
 

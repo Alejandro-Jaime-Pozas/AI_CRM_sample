@@ -18,268 +18,82 @@ This application is a Mexican retail brokerage that enables individuals in Mexic
 - The platform maintains clear audit trails for security and compliance.
 
 **Non-functional priorities**
-1. Security and account protection
+1. Security and account protection (Passkey-first policy)
 2. Reliability and recovery (users must not get locked out)
-3. Speed of onboarding (low friction, high completion)
-4. Clarity and trust (transparent steps, minimal confusion)
+3. Speed of onboarding (progressive disclosure)
+4. Clarity and trust (transparent steps)
 
 ---
 
 ## 2. Scope (this spec)
 ### In scope (minimum viable product)
-- Create an application account and sign in using:
-  1) Email address (magic link and/or password)
-  2) Google sign-in
-  3) Apple sign-in (recommended for mobile users)
-  4) Passkeys (recommended default when available)
-  5) Phone number verification (SMS) as fallback for recovery and optional sign-in
-- Add two-step verification for high-risk actions and optionally for every login
-- Session management (device sessions, logout, session expiration)
-- Account recovery flows (email, phone fallback, support escalation)
-- Security controls (rate limits, suspicious login detection, device trust, audit logs)
+- **Account Creation**: Sign up via Email, Google, or Apple.
+- **Authentication**:
+  - Primary: Passkeys (WebAuthn).
+  - Secondary: Email Magic Links.
+  - Social: Google Sign-In, Apple Sign-In.
+- **Phone Verification**: SMS/WhatsApp for recovery and secondary verification.
+- **Two-Step Verification (2SV)**: Enrollment and enforcement for high-risk actions.
+- **Session Management**: Device-specific sessions, logout, and 1-hour expiration.
+- **Account Recovery**: Email-based recovery with phone fallback.
+- **Audit Logging**: Mandatory logging of all auth-related events.
 
-### Explicitly out of scope (handled by separate specs)
-- Identity verification (know-your-customer), document upload, selfie checks
-- Suitability questionnaires and risk profiling
-- Funding (bank transfers), deposits/withdrawals
-- Trading permissions, market data entitlements
-- Customer support tooling beyond basic escalation notes
+### Explicitly out of scope
+- Full KYC (Identity verification) - *Handled in separate spec*.
+- Risk profiling (Suitability) - *Handled in separate spec*.
+- Financial transactions (Funding/Trading).
 
 ---
 
-## 3. Users and entry points
-### User types
-- New retail user in Mexico (first-time account creation)
-- Returning retail user (repeat sign-in)
-- Locked-out user (recovery)
-- User upgrading security (enabling passkeys and two-step verification)
-
-### Entry points
-- Web and mobile landing page “Create account”
-- Mobile deep links from marketing campaigns
-- “Sign in” from header
-- Re-authentication prompts for sensitive actions (funding, withdrawals, trading, profile changes)
+## 3. Business Rules
+1. **Age Requirement**: Users must be 18+ (verified during KYC, but initial self-attestation at sign-up).
+2. **Residency**: Primary focus is Mexican residents.
+3. **Single Identity**: One account per unique CURP (checked later in KYC), but for Auth, one account per unique email.
+4. **Email Ownership**: Mandatory verification before account activation.
+5. **Progressive Disclosure**: Only collect essential data (Name, Email) before KYC step.
 
 ---
 
-## 4. Goals and success metrics
-### Goals
-- High completion rate for account creation
-- Low support tickets for login/recovery
-- Low account takeover rate
-- Clear security posture without heavy friction
+## 4. Authentication Methods
+### 4.1 Passkeys (Preferred)
+- Default recommendation for all supported devices.
+- Support for multiple passkeys (e.g., phone and laptop).
+- Biometric-backed security.
 
-### Success metrics (initial targets)
-- Account creation completion rate: target defined by product
-- Sign-in success rate: target defined by product
-- Two-step verification enrollment: target defined by product
-- Account takeover events: near zero; investigated and tracked
+### 4.2 OAuth (Google & Apple)
+- Seamless integration for mobile and web.
+- Mandatory account linking check (verify email ownership if already registered).
 
----
+### 4.3 Email Magic Links
+- Passwordless experience to reduce friction and eliminate password-related vulnerabilities.
+- Fallback for devices not supporting Passkeys.
 
-## 5. Authentication methods (requirements)
-### 5.1 Email-based sign-up and login
-**Requirement**
-- User can create an account with an email address.
-- Offer one of the following as default:
-  - Magic link to email (recommended for usability)
-  - Password option (allowed, but discourage weak passwords)
-- Support email verification during sign-up.
-
-**Details**
-- Email verification required before enabling trading-related actions (or before full access; decide in policy).
-- If password is offered:
-  - Must enforce strong password requirements
-  - Must have breached-password checks (if service available)
-  - Must support password reset via email
-
-### 5.2 Google sign-in
-**Requirement**
-- User can create account and log in using Google sign-in.
-- Must support account linking: if a user previously registered with email and later uses Google with same email, provide a safe linking flow (do not auto-link without verification).
-
-### 5.3 Apple sign-in
-**Requirement**
-- User can create account and log in using Apple sign-in.
-- Support Apple private relay email addresses.
-- Support account linking similar to Google.
-
-### 5.4 Passkeys
-**Requirement**
-- Offer passkeys as a primary, strongly recommended option when supported.
-- Passkeys can be set up:
-  - Immediately after account creation, or
-  - On first successful login (prompt to upgrade)
-- Support multiple passkeys per account (for multiple devices).
-
-### 5.5 Phone number verification (SMS) and WhatsApp consideration
-**Requirement**
-- Collect phone number optionally at onboarding or during security setup.
-- Use SMS one-time codes as a fallback for:
-  - Recovery
-  - Two-step verification when a stronger method is not available
-- If WhatsApp verification is considered:
-  - Only if supported by a reputable verification provider
-  - Must include anti-sim-swap and anti-social-engineering safeguards
-  - Must never be the only recovery method
-
-**Note**
-Phone-based methods are convenient in Mexico, but they are weaker than passkeys or authenticator apps. Treat phone as fallback, not the core security method.
+### 4.4 SMS / WhatsApp Fallback
+- Used primarily for recovery and step-up authentication.
+- WhatsApp is preferred in the Mexican market for higher delivery reliability.
 
 ---
 
-## 6. Two-step verification (two-factor authentication) policy
-### 6.1 Enrollment
-- After first login, prompt the user to enable two-step verification.
-- Provide at least:
-  - Authenticator app codes (recommended)
-  - Passkeys (strong alternative)
-  - SMS fallback (last resort)
-
-### 6.2 Enforcement
-Two-step verification required for:
-- Changing email address
-- Changing phone number
-- Changing password (if passwords exist)
-- Adding or removing passkeys
-- Withdrawing funds (when funding exists)
-- Changing bank accounts (when funding exists)
-- Viewing or exporting sensitive account statements (policy decision)
-
-Optional policy:
-- Require two-step verification on every login for high-risk accounts or suspicious logins.
-
-### 6.3 Recovery codes
-- Provide one-time recovery codes at enrollment.
-- Encourage user to store them safely.
-- Allow regenerating recovery codes only after re-authentication.
+## 5. Security Requirements
+1. **Passkey-First**: Prompt for passkey creation immediately after first login.
+2. **Rate Limiting**: IP-based and identifier-based throttling for all auth endpoints.
+3. **Session Expiry**: 1-hour idle timeout; absolute timeout of 24 hours.
+4. **Encryption**: All PII and auth tokens encrypted at rest (Postgres/Redis) and in transit (TLS 1.2+).
+5. **Audit Trail**: Every login attempt (success/failure) must be logged with timestamp, IP, and device fingerprint.
 
 ---
 
-## 7. Account creation flow (user experience)
-### 7.1 Create account (happy path)
-1. User chooses sign-up method:
-   - Email
-   - Google
-   - Apple
-2. If email:
-   - User enters email
-   - User receives verification (magic link or code)
-3. After first successful authentication:
-   - Collect required profile fields (minimum):
-     - Full name (legal name field can be later in identity verification)
-     - Country of residence (default Mexico)
-     - Acceptance of terms and privacy notice
-   - Prompt to set up passkeys and two-step verification
-4. User lands in the application home (with clear next steps such as identity verification and funding, handled in separate specs).
-
-### 7.2 Abandonment handling
-- Save partial progress
-- If user returns via same sign-in method, continue onboarding
+## 6. Acceptance Criteria
+- [ ] User can create an account using GMail/Apple and be redirected to dashboard.
+- [ ] User can register a Passkey and use it for subsequent logins.
+- [ ] User receives an email magic link if Passkey is unavailable.
+- [ ] Suspicious login (new IP/Device) triggers a notification to the user.
+- [ ] 2SV is required before a user can change their contact email.
+- [ ] All auth events are visible in the system audit logs.
 
 ---
 
-## 8. Login flow (user experience)
-### 8.1 Sign in (happy path)
-- User chooses method:
-  - Passkey (if available)
-  - Google / Apple
-  - Email
-- After login:
-  - If risk is high (new device, unusual location, too many attempts), require two-step verification
-  - If low risk and user opted out, allow standard login
-
-### 8.2 Suspicious login handling
-- Show neutral message: “We could not sign you in” without revealing whether the email exists.
-- Trigger additional verification challenges.
-- Notify user via email of new device sign-in.
-
----
-
-## 9. Session and device management
-### Requirements
-- Sessions expire after a defined period (policy decision; include “remember me” with caution).
-- Allow user to view active sessions/devices:
-  - Device name
-  - Last active time
-  - Approximate location
-- Allow user to revoke sessions (log out of other devices).
-
----
-
-## 10. Account recovery
-### Recovery methods
-- Email recovery (primary)
-- Passkey re-registration if existing trusted session exists
-- Phone (SMS) fallback if previously verified
-- Support escalation path:
-  - Identity re-verification (separate policy/spec)
-  - Manual review with audit trail
-
-### Requirements
-- Recovery flow must be resistant to social engineering:
-  - Step-up verification required
-  - Cooling-off period for changing critical identifiers (email/phone) if risk detected
-  - Notify user of recovery attempts
-
----
-
-## 11. Security and abuse prevention requirements
-- Rate limiting and lockouts:
-  - Per account identifier and per internet address
-- Bot protection during sign-up
-- Detect credential stuffing (if passwords exist)
-- Detect and challenge suspicious behavior:
-  - Multiple failed attempts
-  - New device + unusual region
-  - Rapid sign-in method switching
-- Audit logs:
-  - Sign-up events
-  - Sign-in events
-  - Two-step verification events
-  - Recovery events
-  - Account identifier changes
-
----
-
-## 12. Compliance and privacy notes
-- Store minimal personal data until identity verification is required.
-- Encrypt sensitive data at rest and in transit.
-- Maintain auditable security event records.
-- Terms and privacy notice must be accepted during onboarding.
-
----
-
-## 13. Acceptance criteria (testable)
-### Account creation
-- A user can create an account via email and complete verification.
-- A user can create an account via Google.
-- A user can create an account via Apple.
-- A user can set up a passkey after account creation.
-- A user can enable two-step verification and receive recovery codes.
-
-### Login
-- A user can sign in with the same method used at sign-up.
-- A user can sign in with a passkey on a supported device.
-- A new device sign-in triggers a security notification.
-- Suspicious login attempts trigger step-up verification.
-
-### Recovery
-- A user can recover access using email.
-- A user with a verified phone can use SMS as fallback recovery.
-- Users cannot change email or phone without re-authentication and step-up verification.
-
-### Security
-- The system does not reveal whether an email address is registered.
-- Rate limiting prevents repeated brute force attempts.
-
----
-
-## 14. Open questions (to resolve before implementation)
-- Do we allow access to non-trading parts of the application before identity verification? yes
-- Do we require two-step verification for every login, or only for high-risk events? no
-- Is phone number required at onboarding or optional until later? no
-- Do we support WhatsApp verification at all, or only SMS? yes whatsapp
-- What is the default session expiration duration? 1 hour
-
----
+## 7. Open Questions
+- **Q**: What specific magic link provider will be used? (Proposed: Custom Django implementation with signed URLs).
+- **Q**: Should we enforce 2SV for *every* login during MVP? (Decision: High-risk only, but optional for users).
+- **Q**: How long is the "cooling-off" period for email changes? (Proposed: 24 hours).

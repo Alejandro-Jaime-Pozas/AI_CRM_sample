@@ -47,8 +47,32 @@ agentic-first approach.
 
 -   GitHub Actions (free tier)
 
+## Data Model
+
+```mermaid
+erDiagram
+    User ||--o{ PasskeyCredential : owns
+    User {
+        uuid id PK
+        string email
+        string username
+        boolean is_verified
+        string phone_number
+        datetime created_at
+    }
+    PasskeyCredential {
+        string id PK "Credential ID"
+        uuid user_id FK
+        binary public_key
+        integer sign_count
+        datetime created_at
+        datetime last_used_at
+    }
+```
+
 ## Directory Structure
 
 -   `/ai`: contains agent contracts and workflow blueprints.
 -   `/docs`: contains project documentation and feature specs.
--   `/src`: contains the source code.
+-   `/backend`: contains the Django source code and migrations.
+-   `/frontend`: contains the Next.js source code.

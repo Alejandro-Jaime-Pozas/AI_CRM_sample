@@ -94,6 +94,6 @@ This application is a Mexican retail brokerage that enables individuals in Mexic
 ---
 
 ## 7. Open Questions
-- **Q**: What specific magic link provider will be used? (Proposed: Custom Django implementation with signed URLs).
+- **Q**: What specific magic link provider will be used? (Decision: Custom Django implementation with signed URLs).
 - **Q**: Should we enforce 2SV for *every* login during MVP? (Decision: High-risk only, but optional for users).
-- **Q**: How long is the "cooling-off" period for email changes? (Proposed: 24 hours).
+- **Q**: How long is the "cooling-off" period for email changes? (Decision: 24 hours).

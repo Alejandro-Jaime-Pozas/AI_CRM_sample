@@ -16,3 +16,18 @@ Standardized process for implementing new features into the Mexican Online Stock
 6. **Frontend**: Run `ai/agents/frontend.md` for UI and UX.
 7. **Review**: Run `ai/agents/reviewer.md` on the completed diffs.
 8. **Verification**: Run `ai/agents/qa.md` to produce a verification script.
+
+
+## Always Do: Proceed without asking for permission
+  - Log errors in logs/errors/<feature_name>-<timestamp>.md, change name accordingly.
+  - Add the human feature prompt to logs/prompts/<feature_name>-<timestamp>.md, change name accordingly.
+
+## Ask first: Ask for permisson
+  - Ask before modifying database schema
+  - Ask before adding new dependencies
+  - Ask before changing CI/CD configuration
+
+## Never Do: Hard stop - no exceptions
+  - Never commit secrets
+  - Never commit API keys
+  - Never commit .env files

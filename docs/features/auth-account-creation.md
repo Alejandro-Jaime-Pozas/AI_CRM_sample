@@ -100,7 +100,7 @@ We will first focs on user auth process, user account creation and user login.
 ### T1: User model implementation
 **What:** Create django user model, migrations, views, serializers, tests, and documentation. User fields include email, first_name, last_name, phone_number, and curp. first_name, last_name, phone_number, curp are nullable.
 **Files:** `backend/`
-**Tests:** crud user, unique users, unique emails, unique curps, tenancy isolation by user, serializers, views, and any other you deem necessary.
+**Tests:** crud user, unique users, unique emails, unique curps, serializers, views, and any other you deem necessary.
 **Verify:** tests pass, documentation is clear, models are correct, migrations are correct, views are correct, serializers are correct
 
 ### T2: Email + magic link creation and login flow

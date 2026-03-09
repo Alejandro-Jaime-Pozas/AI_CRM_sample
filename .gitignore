@@ -49,3 +49,4 @@ postgres-data/
 
 
 THOUGHTS.md
+celerybeat-schedule*

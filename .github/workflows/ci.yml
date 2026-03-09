@@ -2,7 +2,7 @@ name: CI
 
 on:
   push:
-    branches: [ main, master ]
+    branches: [ main, master, feat/* ]
   pull_request:
     branches: [ main, master ]
 
@@ -34,9 +34,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
-    - name: Set up Node.js
-      uses: actions/setup-python@v5 # Actually setup-node
-      # Wait, I should use setup-node for node.
     - name: Set up Node.js
       uses: actions/setup-node@v4
       with:

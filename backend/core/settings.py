@@ -11,7 +11,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 # Detect if we are running tests
-TESTING = 'test' in sys.argv or 'pytest' in sys.modules
+TESTING = 'test' in sys.argv or 'pytest' in sys.modules or os.environ.get('GITHUB_ACTIONS') == 'true'
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -70,16 +70,25 @@ TEMPLATES = [
 WSGI_APPLICATION = 'core.wsgi.application'
 
 # Database
-DATABASES = {
-    'default': {
-        'ENGINE': os.environ.get('DB_ENGINE', 'django.db.backends.postgresql'),
-        'NAME': os.environ.get('DB_NAME', 'stock_db'),
-        'USER': os.environ.get('DB_USER', 'stock_user'),
-        'PASSWORD': os.environ.get('DB_PASSWORD', 'stock_pass'),
-        'HOST': os.environ.get('DB_HOST', 'db'),
-        'PORT': os.environ.get('DB_PORT', '5432'),
+if TESTING and not os.environ.get('DB_HOST'):
+    # Default to SQLite for CI tests if no Postgres is provided
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
     }
-}
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': os.environ.get('DB_ENGINE', 'django.db.backends.postgresql'),
+            'NAME': os.environ.get('DB_NAME', 'stock_db'),
+            'USER': os.environ.get('DB_USER', 'stock_user'),
+            'PASSWORD': os.environ.get('DB_PASSWORD', 'stock_pass'),
+            'HOST': os.environ.get('DB_HOST', 'db'),
+            'PORT': os.environ.get('DB_PORT', '5432'),
+        }
+    }
 
 # Cache
 CACHES = {

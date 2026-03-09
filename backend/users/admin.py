@@ -10,8 +10,9 @@ class UserAdmin(BaseUserAdmin):
         (None, {"fields": ("email", "password")}),
         ("Personal info", {"fields": ("first_name", "last_name", "phone_number", "curp")}),
         ("Permissions", {"fields": ("is_active", "is_staff", "is_superuser", "groups", "user_permissions")}),
-        ("Important dates", {"fields": ("last_login", "date_joined")}),
+        ("Important dates", {"fields": ("last_login", "date_joined", "updated_at")}),
     )
+    readonly_fields = ("date_joined", "updated_at")
     search_fields = ("email", "first_name", "last_name", "curp")
     ordering = ("email",)
     filter_horizontal = ("groups", "user_permissions")

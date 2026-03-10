@@ -3,7 +3,7 @@ export default function Home() {
     <div className="max-w-2xl w-full space-y-8 text-center">
       <div className="glass p-12 space-y-6 animate-float">
         <h1 className="text-6xl font-bold tracking-tight bg-gradient-to-r from-primary via-white to-secondary bg-clip-text text-transparent">
-          Aura Stock
+          Verso
         </h1>
         <p className="text-xl text-text-muted font-light leading-relaxed">
           The future of Mexican retail investing, built on trust and high-performance technology.

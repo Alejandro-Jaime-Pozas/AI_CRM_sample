@@ -20,6 +20,7 @@ Standardized process for implementing new features into the Mexican Online Stock
 
 ## Always Do: Proceed without asking for permission
   - Log errors in logs/errors/<feature_name>-<timestamp>.md, change name accordingly.
+  - Log a summary of your code implementations in logs/implementations/<feature_name>-<timestamp>.md, change name accordingly.
   - Add the human feature prompt input to logs/prompts/<feature_name>-<timestamp>.md, change name accordingly.
   - If changes impact codebase files such as docker-compose.yml, .github/workflows/*, always update those files as well.
   - Add comments to all important code for a beginner-level software engineer to easily understand what it does.

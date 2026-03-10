@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import "../styles/globals.css";
 
 export const metadata: Metadata = {
-  title: "Aura Stock | Mexican Online Brokerage",
+  title: "Verso | Mexican Online Brokerage",
   description: "Secure, modern stock trading for everyone in Mexico.",
 };
 

@@ -6,7 +6,7 @@
 ---
 
 ## 1. Overview (context)
-This application is a Mexican retail brokerage that enables individuals in Mexico to open an investment account, fund it, and trade listed securities through a web and mobile experience. The product must maximize trust and safety, minimize onboarding friction, and meet Mexico-appropriate compliance and security expectations.
+This application is a Mexican retail brokerage named Verso that enables individuals in Mexico to open an investment account, fund it, and trade listed securities through a web and mobile experience. The product must maximize trust and safety, minimize onboarding friction, and meet Mexico-appropriate compliance and security expectations.
 
 We will first focs on user auth process, user account creation and user login.
 

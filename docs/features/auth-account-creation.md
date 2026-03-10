@@ -6,7 +6,7 @@
 ---
 
 ## 1. Overview (context)
-This application is a Mexican retail brokerage that enables individuals in Mexico to open an investment account, fund it, and trade listed securities through a web and mobile experience. The product must maximize trust and safety, minimize onboarding friction, and meet Mexico-appropriate compliance and security expectations.
+This application is a Mexican retail brokerage named Verso that enables individuals in Mexico to open an investment account, fund it, and trade listed securities through a web and mobile experience. The product must maximize trust and safety, minimize onboarding friction, and meet Mexico-appropriate compliance and security expectations.
 
 We will first focs on user auth process, user account creation and user login.
 
@@ -39,6 +39,7 @@ We will first focs on user auth process, user account creation and user login.
 - Full KYC (Identity verification) - *Handled in separate spec*.
 - Risk profiling (Suitability) - *Handled in separate spec*.
 - Financial transactions (Funding/Trading).
+- Non-authentication features (e.g. password reset, 2SV enrollment).
 
 ---
 
@@ -47,6 +48,7 @@ We will first focs on user auth process, user account creation and user login.
 3. **Single Identity**: One account per unique CURP (checked later in KYC), but for Auth, one account per unique email.
 4. **Email Ownership**: Mandatory verification before account activation.
 5. **Progressive Disclosure**: Only collect essential data (Name, Email) before KYC step.
+6. **Login**: No password login allowed. Only passkey, google, or magic link login allowed.
 
 ---
 
@@ -54,7 +56,6 @@ We will first focs on user auth process, user account creation and user login.
 ### 4.1 Passkeys (Preferred)
 - Default recommendation for all supported devices.
 - Support for multiple passkeys (e.g., phone and laptop).
-- Biometric-backed security.
 
 ### 4.2 OAuth (Google)
 - Seamless integration for mobile and web.
@@ -83,9 +84,6 @@ We will first focs on user auth process, user account creation and user login.
 - [ ] User can create an account using Google Sign-In and be redirected to dashboard.
 - [ ] User can register a Passkey and use it for subsequent logins.
 - [ ] User receives an email magic link if Passkey is unavailable.
-- [ ] Suspicious login (new IP/Device) triggers a notification to the user.
-- [ ] 2SV is required before a user can change their contact email.
-- [ ] All auth events are visible in the system audit logs.
 
 ---
 
@@ -99,4 +97,17 @@ We will first focs on user auth process, user account creation and user login.
 
 ## Tasks
 
-### T1: 
+### T1: User model implementation
+**What:** Create django user model, migrations, views, serializers, tests, and documentation. User fields include email, first_name, last_name, phone_number, and curp. first_name, last_name, phone_number, curp are nullable.
+**Files:** `backend/`
+**Tests:** crud user, unique users, unique emails, unique curps, serializers, views, and any other you deem necessary.
+**Verify:** tests pass, documentation is clear, models are correct, migrations are correct, views are correct, serializers are correct
+
+### T2: Email + magic link creation and login flow
+**What:** Implement Email + magic link creation and login.
+
+### T3: Google account login flow
+**What:** Implement Google account login flow
+
+### T4: Passkey creation and login.
+**What:** Implement Passkey creation and login.

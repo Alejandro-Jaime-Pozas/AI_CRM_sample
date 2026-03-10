@@ -1,6 +1,9 @@
 # Product Overview
 ## Mexican Online Retail Brokerage
 
+### Name
+Verso
+
 ### Purpose
 This application is a Mexican retail brokerage that enables individuals in Mexico to open an investment account, fund it, and trade listed securities through a web and mobile experience. The product must maximize trust and safety, minimize onboarding friction, and meet Mexico-appropriate compliance and security expectations.
 

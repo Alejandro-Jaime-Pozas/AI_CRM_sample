@@ -46,3 +46,7 @@ postgres-data/
 # Project Specific
 /ai/agents/*/temp/
 /tmp/
+
+
+THOUGHTS.md
+celerybeat-schedule*

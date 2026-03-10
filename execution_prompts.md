@@ -1,11 +1,11 @@
 # Plan
-Read docs/features/<name>.md. Produce an implementation plan with DB/API/UI/test tasks. Ask questions only if blocked; otherwise make explicit assumptions.
+Produce an implementation plan with DB/API/UI/test tasks. Ask questions only if blocked; otherwise make explicit assumptions. All based on this file:
 
 # DB
 Implement DB changes from plan: tables, constraints, indexes, migration + rollback notes.
 
 # Backend
-“Implement endpoints + validation + auth + tenant scoping. Add tests for acceptance criteria.”
+“Implement endpoints + validation + auth + other backend logic. Add tests for acceptance criteria.”
 
 # Frontend
 “Build UI: contacts list/search/create/edit + account contacts section. Add loading/error/empty states.”

@@ -3,12 +3,6 @@ FROM node:20-alpine AS base
 
 # Install dependencies only when needed
 FROM base AS deps
-WORKDIR /backend
-# Note: Using /backend name because that's what user requested for the backend container.
-# Wait, for the frontend container, should it also be /backend?
-# The user said "change the docker version of the backend app's name from 'app' to 'backend', so that it matches the local dir name as well".
-# So for the frontend container, it should probably be /frontend.
-
 WORKDIR /frontend
 COPY package.json package-lock.json* ./
 RUN npm install
